@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#087dc5"><title>Petualangan Ilmu</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar"><div class="brand-mini">🧭 PETUALANGAN ILMU</div><div class="top-actions"><button id="soundBtn" class="round" title="Suara">🔊</button><button id="helpBtn" class="round" title="Petunjuk">❔</button></div></header>
+  <main>
+    <section id="homeScreen" class="screen home-screen">
+      <div class="home-shade"></div>
+      <div class="home-content">
+        <div class="logo-wrap"><div class="eyebrow">JELAJAHI DUNIA ILMU!</div><h1>PETUALANGAN <span>ILMU</span></h1><p class="slogan">BELAJAR • BERMAIN • BERPETUALANG • BERPRESTASI</p></div>
+        <div class="home-panels">
+          <div class="wood-panel class-panel"><h2>🎒 PILIH KELAS</h2><div id="classChoices" class="class-grid"></div></div>
+          <div class="center-panel">
+            <h2 class="wood-heading">PILIH MODE PERMAINAN</h2>
+            <div id="modeChoices" class="mode-grid">
+              <button class="mode-card selected" data-mode="solo"><span>🧒</span><b>SOLO</b><small>1 PEMAIN</small></button>
+              <button class="mode-card" data-mode="duo"><span>🧑‍🤝‍🧑</span><b>DUO</b><small>2 PEMAIN</small></button>
+              <button class="mode-card" data-mode="group"><span>👨‍👩‍👧‍👦</span><b>KELOMPOK</b><small>3–5 PEMAIN</small></button>
+            </div>
+            <h2 class="wood-heading">PILIH TINGKAT LEVEL</h2>
+            <div id="difficultyChoices" class="difficulty-grid">
+              <button class="difficulty selected" data-difficulty="mudah">⭐<b>MUDAH</b></button>
+              <button class="difficulty" data-difficulty="sedang">⭐⭐<b>SEDANG</b></button>
+              <button class="difficulty" data-difficulty="sulit">⭐⭐⭐<b>SULIT</b></button>
+            </div>
+            <button id="startBtn" class="primary-btn">▶ MULAI PETUALANGAN</button>
+          </div>
+          <div class="wood-panel subject-panel"><h2>📚 PILIH MATA PELAJARAN</h2><div id="subjectChoices" class="subject-grid"></div></div>
+        </div>
+        <div class="credit-plaque">👤 Game ini dibuat oleh <b>Eko Angga Purnomo, S.Pd.</b><br>Belajar itu menyenangkan! ⭐</div>
+      </div>
+    </section>
+    <section id="gameScreen" class="screen game-screen hidden">
+      <div id="worldCanvasWrap"><canvas id="worldCanvas"></canvas><div class="world-vignette"></div></div>
+      <div class="hud">
+        <button id="homeBtn" class="hud-btn">🏠 Menu</button><div class="hud-stats"><span id="hudClass">Kelas 5</span><span id="hudSubject">IPAS</span><span id="hudLevel">Level 1</span></div><button id="pauseBtn" class="hud-btn">Ⅱ Jeda</button>
+      </div>
+      <div class="quest-card"><div class="quest-title">🧭 MISI PETUALANGAN</div><div id="questText">Jelajahi dunia dan kumpulkan bintang!</div><div class="progress-track"><div id="progressFill"></div></div><small id="progressLabel">0 / 10 tantangan</small></div>
+      <div class="score-card"><span>⭐ <b id="stars">0</b></span><span>🪙 <b id="coins">0</b></span><span>🏆 <b id="points">0</b></span></div>
+      <div class="hint-pill">WASD / ← → bergerak · SPACE lompat · E / 🎯 interaksi</div>
+      <div class="touch-controls"><div class="move-controls"><button data-control="left">◀</button><button data-control="right">▶</button></div><div class="action-controls"><button data-control="jump">⬆<small>LOMPAT</small></button><button data-control="interact">🎯<small>AKSI</small></button></div></div>
+      <div id="interactPrompt" class="interact-prompt hidden">✨ SENTUH / TEKAN E UNTUK MULAI TANTANGAN</div>
+    </section>
+  </main>
+  <div id="questionModal" class="modal hidden"><div class="modal-card question-card"><div class="modal-top"><span id="questionTag">IPAS • KELAS 5</span><button class="close-btn" id="closeQuestion">✕</button></div><div class="question-progress"><span id="questionCount">Tantangan 1/10</span><span id="timerText">⏱ 30</span></div><h2 id="questionText">Pertanyaan tampil di sini</h2><div id="answerChoices" class="answer-grid"></div><div id="feedback" class="feedback hidden"></div><button id="nextQuestion" class="primary-btn hidden">LANJUTKAN ➜</button></div></div>
+  <div id="setupModal" class="modal hidden"><div class="modal-card"><button class="close-btn floating-close" data-close="setupModal">✕</button><h2>👥 Siapa saja petualangnya?</h2><p>Masukkan nama pemain. Pada mode kelompok, setiap pemain mendapat giliran.</p><div id="playerInputs" class="player-inputs"></div><button id="savePlayers" class="primary-btn">SIMPAN PEMAIN</button></div></div>
+  <div id="pauseModal" class="modal hidden"><div class="modal-card pause-card"><h1>⏸️ JEDA PETUALANGAN</h1><button id="resumeBtn" class="primary-btn">▶ LANJUTKAN</button><button id="restartBtn" class="secondary-btn">🔄 ULANGI LEVEL</button><button id="pauseHomeBtn" class="secondary-btn">🏠 MENU UTAMA</button></div></div>
+  <div id="resultModal" class="modal hidden"><div class="modal-card result-card"><div class="trophy">🏆</div><h1 id="resultTitle">LEVEL SELESAI!</h1><p id="resultMessage">Hebat! Kamu berhasil.</p><div class="result-stats"><div>⭐<b id="finalStars">0</b><small>Bintang</small></div><div>🪙<b id="finalCoins">0</b><small>Koin</small></div><div>🏆<b id="finalPoints">0</b><small>Poin</small></div></div><div id="leaderboard" class="leaderboard"></div><button id="playAgainBtn" class="primary-btn">🔁 MAIN LAGI</button><button id="resultHomeBtn" class="secondary-btn">🏠 MENU UTAMA</button></div></div>
+  <div id="helpModal" class="modal hidden"><div class="modal-card"><button class="close-btn floating-close" data-close="helpModal">✕</button><h2>🧭 Cara Bermain</h2><ul><li>Pilih kelas, mata pelajaran, mode, dan tingkat kesulitan.</li><li>Berjalanlah menuju kristal/buku bercahaya, lalu tekan <b>E</b> atau tombol 🎯.</li><li>Jawab soal untuk mendapat poin, bintang, dan koin.</li><li>Gunakan tombol layar pada HP/PID atau keyboard pada laptop.</li><li>Jawaban salah bukan akhir permainan—pelajari penjelasannya dan coba lagi!</li></ul><button class="primary-btn" data-close="helpModal">SIAP BERPETUALANG!</button></div></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script><script src="game.js"></script>
+</body></html>
